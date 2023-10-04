@@ -9,6 +9,9 @@ const Login = (props) => {
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
+  const [cName, setCName] = useState('');
+  const [cNameIsValid ,setCNameIsValid] = useState()
+
   const [formIsValid, setFormIsValid] = useState(false);
 
 
@@ -16,7 +19,7 @@ const Login = (props) => {
     const identifier = setTimeout(() => {
       console.log('Checking form validity!');
       setFormIsValid(
-        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+        ((enteredEmail.includes('@')) && (enteredPassword.trim().length > 6) && (cName.trim().length>2))
       );
     }, 500);
 
@@ -24,7 +27,7 @@ const Login = (props) => {
       console.log('CLEANUP');
       clearTimeout(identifier);
     };
-  }, [enteredEmail, enteredPassword]);
+  }, [enteredEmail, enteredPassword ,cName]);
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
@@ -32,7 +35,10 @@ const Login = (props) => {
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
+  };
 
+  const cNameChangeHandler = (event) => {
+    setCName(event.target.value);
   };
 
   const validateEmailHandler = () => {
@@ -41,6 +47,10 @@ const Login = (props) => {
 
   const validatePasswordHandler = () => {
     setPasswordIsValid(enteredPassword.trim().length > 6);
+  };
+
+  const validateCNamedHandler = () => {
+    setCNameIsValid(cName.trim().length > 0);
   };
 
   const submitHandler = (event) => {
@@ -77,6 +87,14 @@ const Login = (props) => {
             value={enteredPassword}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
+          />
+          <label htmlFor="cname">College Name</label>
+          <input
+            type="text"
+            id="cname"
+            value={cName}
+            onChange={cNameChangeHandler}
+            onBlur={validateCNamedHandler}
           />
         </div>
         <div className={classes.actions}>
